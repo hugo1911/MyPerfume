@@ -1,14 +1,14 @@
 //
 //  ContentView.swift
 //  MyPerfume
-//ya debe haber
+//
 //  Created by Hugo Manzano on 07/01/25.
 //
 
 import SwiftUI
 import PhotosUI
 
-struct ContentView: View {
+struct ImagePickerView: View {
     
     // Es opcional porque no siempre vamos a estar presionando el botón
     @State private var pickerItem: PhotosPickerItem?
@@ -17,7 +17,13 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
-            PhotosPicker("Select a picture", selection: $pickerItem, matching: .images) //solo necesitamos imagenes
+            Text("Selecciona una imagen")
+            PhotosPicker(selection: $pickerItem, matching: .images) {
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+            }
             
             selectedImage?
                 .resizable()
@@ -33,5 +39,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ImagePickerView()
 }

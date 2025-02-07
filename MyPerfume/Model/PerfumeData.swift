@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
+import Observation
 
-struct PerfumeData: Identifiable {
+@Observable
+class PerfumeData: Identifiable {
     
     var id: UUID
     var name: String
@@ -17,5 +20,16 @@ struct PerfumeData: Identifiable {
     var perfumeImage: String
     var isFavorite: Bool
     var notes: String
+    
+    init(id: UUID, name: String, brand: String, price: Double, description: String, perfumeImage: String, isFavorite: Bool, notes: String) {
+        self.id = id
+        self.name = name
+        self.brand = brand
+        self.price = price
+        self.description = description
+        self.perfumeImage = perfumeImage
+        self.isFavorite = isFavorite
+        self.notes = notes
+    }
     
 }
