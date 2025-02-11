@@ -10,9 +10,15 @@ import SwiftUI
 
 
 struct MainView: View {
+        
+    var perfume: [PerfumeData] = []
+    
+    
+    
+    @State private var isImagePresented = false
     var body: some View {
         
-        NavigationView{
+        NavigationStack{
             ZStack {
                 
                 RoundedRectangle(cornerRadius: 25.0)
@@ -22,9 +28,8 @@ struct MainView: View {
                 
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    
-                    HStack{
+                ToolbarItemGroup(placement: .principal) {
+                    HStack {
                         Text("Bienvenido")
                             .font(.largeTitle)
                             .fontWeight(.bold)
@@ -33,18 +38,21 @@ struct MainView: View {
                         
                         Spacer()
                         
-                        Button{
-                            print("Botón presionado")
-                            
-                        }label: {
+                        Button {
+                            isImagePresented = true // ✅ Activa la sheet cuando se presiona
+                        } label: {
                             Image(systemName: "plus")
                                 .foregroundStyle(.white)
-                            
-                            
                         }
-                        
                     }
                 }
+            }
+            .sheet(isPresented: $isImagePresented) { // ✅ La sheet está fuera del Button
+                AddPerfume()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .background(Color.black.edgesIgnoringSafeArea(.all))
+                
+                    
             }
             
         }
