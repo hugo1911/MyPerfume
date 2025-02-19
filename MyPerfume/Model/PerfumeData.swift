@@ -10,7 +10,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class PerfumeData: Identifiable {
+class PerfumeData: Identifiable, Codable {
     
     var id: UUID
     var name: String

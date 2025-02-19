@@ -1,32 +1,40 @@
-//
-//  MainView.swift
-//  MyPerfume
-//
-//  Created by Hugo Manzano on 06/02/25.
-//
+//hugo Manzano 36231
 
 import SwiftUI
 
-
-
 struct MainView: View {
-        
-    var perfume: [PerfumeData] = []
-    
-    
-    
+    @State private var viewModel = perfumeViewModel(perfume: [])
     @State private var isImagePresented = false
+    
     var body: some View {
-        
-        NavigationStack{
+        NavigationStack {
             ZStack {
-                
+                // Fondo
                 RoundedRectangle(cornerRadius: 25.0)
-                    .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.brown]), startPoint: .top, endPoint: .bottom))
+                    .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.brown]),
+                          startPoint: .top, endPoint: .bottom))
                     .edgesIgnoringSafeArea(.all)
                 
-                
+                // Grid de perfumes
+                ScrollView {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 20) {
+                        if viewModel.perfume.isEmpty {
+                            Text("No hay perfumes agregados")
+                                .foregroundStyle(.white)
+                                .padding()
+                        } else {
+                            ForEach(viewModel.perfume) { perfume in
+                                InformationBlock(perfume: perfume)
+                            }
+                        }
+                    }
+                    .padding()
+                }
             }
+            // Tu toolbar original
             .toolbar {
                 ToolbarItemGroup(placement: .principal) {
                     HStack {
@@ -39,7 +47,7 @@ struct MainView: View {
                         Spacer()
                         
                         Button {
-                            isImagePresented = true // ✅ Activa la sheet cuando se presiona
+                            isImagePresented = true
                         } label: {
                             Image(systemName: "plus")
                                 .foregroundStyle(.white)
@@ -47,21 +55,16 @@ struct MainView: View {
                     }
                 }
             }
-            .sheet(isPresented: $isImagePresented) { // ✅ La sheet está fuera del Button
+            .sheet(isPresented: $isImagePresented) {
                 AddPerfume()
                     .navigationBarTitleDisplayMode(.inline)
                     .background(Color.black.edgesIgnoringSafeArea(.all))
-                
-                    
             }
-            
         }
-        
-        
     }
 }
 
-
+// Preview
 #Preview {
     MainView()
 }

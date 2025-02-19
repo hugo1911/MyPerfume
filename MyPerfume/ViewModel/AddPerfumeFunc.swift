@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import Observation
 
+
+
+@Observable
 class perfumeViewModel {
     
     var perfume: [PerfumeData] = []
