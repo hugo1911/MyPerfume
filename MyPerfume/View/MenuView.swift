@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-// Modular Menu View
 struct MenuView: View {
-    let options: [String] // Options passed in as a parameter
-    @State private var selectedOption: String? // Binding to the selected option
-    @State private var isMenuVisible = true // Control menu visibility
+    let options: [String]
+    @State private var selectedOption: String?
+    @State private var isMenuVisible = true
 
     var body: some View {
         if isMenuVisible {
@@ -20,11 +19,11 @@ struct MenuView: View {
                     Button(option) {
                         selectedOption = option
                         print("Selected: \(option)")
-                        isMenuVisible = false // Hide the menu after selection
+                        isMenuVisible = false
                     }
                 }
             } label: {
-                Label(selectedOption ?? "Select an option", systemImage: "list.bullet")
+                Label(selectedOption ?? "Agrega tus notas", systemImage: "list.bullet")
             }
         } else {
             // Display the selected option

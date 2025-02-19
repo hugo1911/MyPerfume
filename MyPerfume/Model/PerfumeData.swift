@@ -19,7 +19,7 @@ class PerfumeData: Identifiable {
     var description: String
     var perfumeImage: String
     var isFavorite: Bool
-    var notes: String
+    var notes: [String]
     
     init(id: UUID, name: String, brand: String, price: Double, description: String, perfumeImage: String, isFavorite: Bool, notes: String) {
         self.id = id
@@ -29,7 +29,7 @@ class PerfumeData: Identifiable {
         self.description = description
         self.perfumeImage = perfumeImage
         self.isFavorite = isFavorite
-        self.notes = notes
+        self.notes = [notes]
     }
     
 }

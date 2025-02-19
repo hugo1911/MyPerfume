@@ -14,6 +14,7 @@ struct ImagePickerView: View {
     @State private var selectedImage: UIImage?
     @State private var isImagePresented: String = "Selecciona una vista"
     
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -70,3 +71,4 @@ struct ImagePickerView: View {
 #Preview {
     ImagePickerView()
 }
+

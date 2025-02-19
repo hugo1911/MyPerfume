@@ -11,6 +11,13 @@ struct AddPerfume: View {
     
     
     var addPerfume = perfumeViewModel(perfume: [])
+    @State private var perfumeName = ""
+    @State private var perfumeBrand = ""
+    @State private var perfumePrice = ""
+    @State private var perfumeDescription = ""
+    @State private var perfumeNotes = ""
+    @State private var perfumeImage: UIImage?
+    
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -24,20 +31,18 @@ struct AddPerfume: View {
                     .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.brown]), startPoint: .top, endPoint: .bottom))
                     .edgesIgnoringSafeArea(.all)
                 
-                
                 //ponemos el constant para que no se muestre el texto en gris
                 Form {
                     Section(header: Text("Información del perfume").foregroundStyle(.white)) {
-                        TextField("Nombre", text: .constant(""))
-                        TextField("Marca", text: .constant(""))
-                        TextField("Precio", text: .constant(""))
-                        TextField("Descripción", text: .constant(""))
-                        TextField("Notas", text: .constant(""))
+                        TextField("Nombre", text: $perfumeName)
+                        TextField("Marca", text: $perfumeBrand)
+                        MenuView(options: ["Marino", "Madera", "Vainilla"])
+                        TextField("Descripción", text: $perfumeDescription)
                         
                         ImagePickerView()
                         
                         Button("Guardar Perfume") {
-                            //guardar perfume 
+                            //guardar perfume
                             addPerfume.aggregatePerfume()
                         }
                         
