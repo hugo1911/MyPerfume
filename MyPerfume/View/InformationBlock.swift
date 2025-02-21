@@ -57,8 +57,7 @@ struct InformationBlock: View {
         brand: "Marca",
         price: 99.99,
         description: "Una fragancia única",
-        perfumeImage: "PerfumeImage",
-        isFavorite: false,
-        notes: "Notas florales"
+        perfumeImage: UIImage(named: "imagen_de_perfume") ?? UIImage(), // Proporcionar una imagen válida,
+        notes: [""]
     ))
 }

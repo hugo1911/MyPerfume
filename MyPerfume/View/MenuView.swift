@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     let options: [String]
-    @State private var selectedOption: String?
+    @Binding var selectedOption: String?
     @State private var isMenuVisible = true
 
     var body: some View {
@@ -38,5 +38,5 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView(options: ["Option 1", "Option 2", "Option 3"])
+    MenuView(options: ["Option 1", "Option 2", "Option 3"], selectedOption: .constant(nil))
 }

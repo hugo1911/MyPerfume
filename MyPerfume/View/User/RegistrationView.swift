@@ -14,16 +14,35 @@ struct RegistrationView: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-            
-            Text("Registro de Usuario")
-                .frame(width: 300, height: 50)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-            
-            TextField("Nombre", text: .constant(""))
+            VStack{
+                Text("Registro de Usuario")
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                 
-            
+                TextField("Nombre", text: .constant(""))
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                
+                TextField("Ingrese su contraseña", text: .constant(""))
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                
+                NavigationLink(destination: MainView()
+                    .navigationBarBackButtonHidden(true)
+                ) {
+                    Text("Registrarse")
+                        .frame(width: 300, height: 50)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+                .padding(.bottom, 80)
+                
+            }
         }
+        
     }
 }
 

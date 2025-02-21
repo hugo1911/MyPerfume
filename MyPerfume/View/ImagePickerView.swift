@@ -12,7 +12,9 @@ struct ImagePickerView: View {
     
     @State private var pickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
-    @State private var isImagePresented: String = "Selecciona una vista"
+    @State private var isImagePresented: String = "Selecciona una imagen"
+    @Binding var image: UIImage?
+    
     
     
     var body: some View {
@@ -69,6 +71,5 @@ struct ImagePickerView: View {
 }
 
 #Preview {
-    ImagePickerView()
+    ImagePickerView(image: .constant(UIImage()))
 }
-

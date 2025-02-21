@@ -1,74 +1,109 @@
-//
-//  AddPerfume.swift
-//  MyPerfume
-//
-//  Created by Hugo Manzano on 06/02/25.
-//
-
 import SwiftUI
 
 struct AddPerfume: View {
-    @State var viewModel = perfumeViewModel(perfume: [])
-    
+    @Binding var perfumes: [PerfumeData]  // Recibe el array de perfumes
+
     @State private var perfumeName = ""
     @State private var perfumeBrand = ""
-    @State private var perfumePrice = ""
+    @State private var perfumePrice: Double = 0.0
     @State private var perfumeDescription = ""
-    @State private var perfumeNotes = ""
+    @State private var perfumeNotes: String? = nil
     @State private var perfumeImage: UIImage?
     
-    @Environment(\.dismiss) private var dismiss
-    
+    @Environment(\.dismiss) private var dismiss  // Para cerrar la vista
+
     var body: some View {
         NavigationStack {
             ZStack {
+                // Fondo con degradado
                 RoundedRectangle(cornerRadius: 25.0)
-                    .fill(LinearGradient(gradient: Gradient(colors: [Color.black, Color.brown]),
-                          startPoint: .top, endPoint: .bottom))
-                    .edgesIgnoringSafeArea(.all)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.black, Color.brown]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .ignoresSafeArea()
                 
-                Form {
-                    Section {
+                // Contenido principal
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Información del perfume")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.horizontal)
+                        
+                        // Campo de Nombre
                         TextField("Nombre", text: $perfumeName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                        
+                        // Campo de Marca
                         TextField("Marca", text: $perfumeBrand)
-                        MenuView(options: ["Marino", "Madera", "Vainilla"])
-                        TextField("Precio", text: $perfumePrice)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                        
+                        // Campo de Precio
+                        TextField("Precio", value: $perfumePrice, format: .number)
                             .keyboardType(.decimalPad)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                        
+                        // Campo de Descripción
                         TextField("Descripción", text: $perfumeDescription)
-                        TextField("Notas", text: $perfumeNotes)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
                         
-                        ImagePickerView()
+                        // Menu de selección para nota
+                        MenuView(options: ["Dulce", "Cítrico", "Amaderado", "Floral", "Oriental", "Fresco", "Especiado", "Verde", "Acuático", "Aromático"],
+                                 selectedOption: $perfumeNotes)
+                            .padding(.horizontal)
                         
-                        Button("Guardar Perfume") {
+                        // Selector de imagen
+                        ImagePickerView(image: $perfumeImage)
+                            .padding(.horizontal)
+                        
+                        // Botón para guardar el perfume
+                        Button(action: {
+                            // Se crea un nuevo perfume usando los datos ingresados
                             let newPerfume = PerfumeData(
                                 id: UUID(),
                                 name: perfumeName,
                                 brand: perfumeBrand,
-                                price: Double(perfumePrice) ?? 0.0,
+                                price: perfumePrice,
                                 description: perfumeDescription,
-                                perfumeImage: "PerfumeImage",
-                                isFavorite: false,
-                                notes: perfumeNotes
+                                perfumeImage: perfumeImage ?? UIImage(systemName: "photo")!,
+                                // Convertimos la nota en array (si deseas una nota única)
+                                notes: (perfumeNotes?.isEmpty == false) ? [perfumeNotes!] : []
                             )
                             
-                            viewModel.addPerfume(newPerfume)
+                            perfumes.append(newPerfume)
+                            print("Perfume agregado: \(newPerfume.name), total perfumes: \(perfumes.count)")
                             dismiss()
+                        }) {
+                            Text("Guardar Perfume")
+                                .fontWeight(.bold)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
                         }
+                        .padding(.horizontal)
                         .disabled(perfumeName.isEmpty || perfumeBrand.isEmpty)
-                    } header: {
-                        Text("Información del perfume")
-                            .foregroundStyle(.white)
+                        
+                        Spacer()
                     }
-                    .listRowBackground(Color.white)
+                    .padding(.vertical)
                 }
-                .scrollContentBackground(.hidden)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Cancelar") {
                         dismiss()
                     }
-                    .foregroundStyle(.white)
+                    .foregroundColor(.white)
                 }
             }
         }
@@ -76,5 +111,12 @@ struct AddPerfume: View {
 }
 
 #Preview {
-    AddPerfume()
+    AddPerfume(perfumes: .constant([
+        PerfumeData(name: "Perfume Test",
+                    brand: "Test Brand",
+                    price: 50.0,
+                    description: "Test Description",
+                    perfumeImage: UIImage(systemName: "photo") ?? UIImage(),
+                    notes: ["Floral", "Dulce"])
+    ]))
 }
