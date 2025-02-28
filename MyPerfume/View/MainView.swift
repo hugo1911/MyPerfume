@@ -1,10 +1,7 @@
-//Hugo Manzano 36231
-
-
 import SwiftUI
 
 struct MainView: View {
-    @State private var perfumes: [PerfumeData] = []  // 🔹 Ahora perfumes está en @State
+    @State private var viewModel = perfumeViewModel(perfume: [])
     @State private var isImagePresented = false
     
     var body: some View {
@@ -21,15 +18,20 @@ struct MainView: View {
                         GridItem(.flexible())
                     ], spacing: 20) {
                         
-                        Text("Total perfumes: \(perfumes.count)")
+                        Text("Total perfumes: \(viewModel.perfume.count)")
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                            .gridCellColumns(2)
                         
-                        if perfumes.isEmpty {
+                        if viewModel.perfume.isEmpty {
                             Text("No hay perfumes agregados")
                                 .foregroundStyle(.white)
                                 .padding()
+                                .gridCellColumns(2)
                         } else {
-                            ForEach(perfumes) { perfume in
+                            ForEach(viewModel.perfume) { perfume in
                                 InformationBlock(perfume: perfume)
+                                    
                             }
                         }
                     }
@@ -57,16 +59,28 @@ struct MainView: View {
                 }
             }
             .sheet(isPresented: $isImagePresented) {
-                AddPerfume(perfumes: $perfumes)  // 🔹 Pasamos el binding correctamente
+                AddPerfume(viewModel: viewModel)
             }
             .onAppear {
-                print("MainView se actualizó, perfumes actuales: \(perfumes.count)")
+                print("MainView se actualizó, perfumes actuales: \(viewModel.perfume.count)")
+                
+                //prueba
+                if viewModel.perfume.isEmpty {
+                    let testPerfume = PerfumeData(
+                        name: "Perfume de Prueba",
+                        brand: "Marca Test",
+                        price: 99.99,
+                        description: "Perfume para depuración",
+                        perfumeImage: UIImage(systemName: "photo") ?? UIImage(),
+                        notes: ["Test"]
+                    )
+                    viewModel.addPerfume(testPerfume)
+                }
             }
         }
     }
 }
 
 #Preview {
-        
     MainView()
 }

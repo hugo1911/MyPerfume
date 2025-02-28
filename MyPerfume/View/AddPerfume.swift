@@ -1,8 +1,10 @@
+//hugo Manzano 36231
+
 import SwiftUI
 
 struct AddPerfume: View {
-    @Binding var perfumes: [PerfumeData]  // Recibe el array de perfumes
-
+    var viewModel: perfumeViewModel
+    
     @State private var perfumeName = ""
     @State private var perfumeBrand = ""
     @State private var perfumePrice: Double = 0.0
@@ -78,8 +80,8 @@ struct AddPerfume: View {
                                 notes: (perfumeNotes?.isEmpty == false) ? [perfumeNotes!] : []
                             )
                             
-                            perfumes.append(newPerfume)
-                            print("Perfume agregado: \(newPerfume.name), total perfumes: \(perfumes.count)")
+                            viewModel.addPerfume(newPerfume)
+                            print("Perfume agregado: \(newPerfume.name), total perfumes: \(viewModel.perfume.count)")
                             dismiss()
                         }) {
                             Text("Guardar Perfume")
@@ -111,12 +113,5 @@ struct AddPerfume: View {
 }
 
 #Preview {
-    AddPerfume(perfumes: .constant([
-        PerfumeData(name: "Perfume Test",
-                    brand: "Test Brand",
-                    price: 50.0,
-                    description: "Test Description",
-                    perfumeImage: UIImage(systemName: "photo") ?? UIImage(),
-                    notes: ["Floral", "Dulce"])
-    ]))
+    AddPerfume(viewModel: perfumeViewModel(perfume: []))
 }

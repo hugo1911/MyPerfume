@@ -21,7 +21,7 @@ class perfumeViewModel {
     
     
     func deletePerfume() {
-        let delPerfume = perfume.remove(at: 0)
+        let _ = perfume.remove(at: 0)
     }
 
     func addPerfume(_ perfume: PerfumeData) {
