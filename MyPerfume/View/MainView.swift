@@ -1,8 +1,12 @@
+//Hugo Manzano
+
+
 import SwiftUI
 
 struct MainView: View {
     @State private var viewModel = perfumeViewModel(perfume: [])
     @State private var isImagePresented = false
+    @StateObject private var locationManager = LocationManager()
     
     var body: some View {
         NavigationStack {
@@ -18,10 +22,20 @@ struct MainView: View {
                         GridItem(.flexible())
                     ], spacing: 20) {
                         
-                        Text("Total perfumes: \(viewModel.perfume.count)")
-                            .foregroundStyle(.white)
-                            .fontWeight(.bold)
-                            .gridCellColumns(2)
+                        VStack{
+                            
+                            Text("Total perfumes: \(viewModel.perfume.count)")
+                                .foregroundStyle(.white)
+                                .fontWeight(.bold)
+                                .gridCellColumns(2)
+                            
+                            
+                            Text("País: \(locationManager.country)")
+                                .foregroundStyle(.white)
+                                .font(.title)
+                                .padding()
+                        }
+                        
                         
                         if viewModel.perfume.isEmpty {
                             Text("No hay perfumes agregados")
@@ -31,8 +45,12 @@ struct MainView: View {
                         } else {
                             ForEach(viewModel.perfume) { perfume in
                                 InformationBlock(perfume: perfume)
+                                
+                                
                                     
                             }
+                            
+                            
                         }
                     }
                     .padding()

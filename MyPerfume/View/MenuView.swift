@@ -23,7 +23,7 @@ struct MenuView: View {
                     }
                 }
             } label: {
-                Label(selectedOption ?? "Agrega tus notas", systemImage: "list.bullet")
+                Label(selectedOption ?? "Agregue la nota predominante", systemImage: "list.bullet")
             }
         } else {
             // Display the selected option

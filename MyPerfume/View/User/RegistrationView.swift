@@ -21,38 +21,72 @@ struct RegistrationView: View {
         //La imagen esta de fondo en toda la pantalla
         
         VStack {
-            Text("Registro de Usuario")
-                .font(.title)
-                .foregroundStyle(.white)
-                .frame(width: 300, height: 50)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .foregroundStyle(.black)
             
-            TextField("Nombre", text: $username)
-                .frame(width: 300, height: 50)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .foregroundStyle(.black)
+            VStack{
+                
+                Text("Registro de Usuario")
+                    .font(.title)
+                    .foregroundStyle(.black)
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .foregroundStyle(.black)
+                
+                TextField("  Nombre", text: $username)
+                    .foregroundStyle(.black)
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
+                    .padding()
+                
+                //Hace que la contraseña salga con puntitos
+                SecureField("  Ingrese su contraseña", text: $password)
+                    .foregroundStyle(.black)
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
+                    .onChange(of: password) { validatePassword() }
+                
+            }
+            .padding(.bottom, 50)
             
-            //Hace que la contraseña salga con puntitos
-            SecureField("Ingrese su contraseña", text: $password)
-                .foregroundStyle(.black)
-                .frame(width: 300, height: 50)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .onChange(of: password) { validatePassword() }
             
-            Text("La contraseña debe cumplir lo siguiente")
-                .foregroundStyle(.black)
-                .frame(width: 300, height: 50)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            HStack{
+                
+                Text("💡")
+                    .font(.title)
+                
+                Text("La contraseña debe cumplir lo siguiente")
+                    .foregroundStyle(.black)
+                    .frame(width: 300, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                
+            }
+            .padding(.leading, 40)
             
             // Requisitos con checks
             HStack {
                 Text("Al menos 8 caracteres")
                     .foregroundStyle(.black)
+                    .frame(width: 270, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
                 Spacer()
                 Image(systemName: hasMinLength ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundColor(hasMinLength ? .green : .red)
@@ -60,11 +94,19 @@ struct RegistrationView: View {
             .frame(width: 300, height: 50)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 25)
             
             HStack {
                 Text("Al menos un numero")
                     .foregroundStyle(.black)
+                    .frame(width: 270, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
                 Spacer()
                 Image(systemName: hasNumber ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundColor(hasNumber ? .green : .red)
@@ -72,11 +114,19 @@ struct RegistrationView: View {
             .frame(width: 300, height: 50)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 25)
             
             HStack {
                 Text("Al menos una letra mayuscula")
                     .foregroundStyle(.black)
+                    .frame(width: 270, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
                 Spacer()
                 Image(systemName: hasUppercase ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundColor(hasUppercase ? .green : .red)
@@ -84,11 +134,19 @@ struct RegistrationView: View {
             .frame(width: 300, height: 50)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 25)
             
             HStack {
                 Text("Al menos un caracter especial")
                     .foregroundStyle(.black)
+                    .frame(width: 270, height: 50)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
                 Spacer()
                 Image(systemName: hasSpecialChar ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundColor(hasSpecialChar ? .green : .red)
@@ -96,7 +154,7 @@ struct RegistrationView: View {
             .frame(width: 300, height: 50)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding(.horizontal, 50)
+            .padding(.bottom, 50)
             
             NavigationLink(destination: LoginView()
                 .navigationBarBackButtonHidden(true)

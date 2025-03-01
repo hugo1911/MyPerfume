@@ -1,61 +1,31 @@
-//
-//  LocationManager.swift
-//  MyPerfume
-//
-//  Created by Hugo Manzano on 2/27/25.
-//
-
-import SwiftUI
-import MapKit
+import Foundation
+import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
-    @Published var showLocationAlert = false
     private var locationManager = CLLocationManager()
-
+    
+    @Published var country: String = "Desconocido"
+    
     override init() {
         super.init()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
-
-    func requestLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()
-        }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        fetchCountry(from: location)
     }
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let status = manager.authorizationStatus
-        DispatchQueue.main.async {
-            switch status {
-            case .denied, .restricted:
-                self.showLocationAlert = true
-            case .authorizedWhenInUse, .authorizedAlways:
-                self.locationManager.startUpdatingLocation()
-            default:
-                break
+    
+    private func fetchCountry(from location: CLLocation) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let country = placemarks?.first?.country {
+                DispatchQueue.main.async {
+                    self.country = country
+                }
             }
         }
     }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        
-        DispatchQueue.main.async {
-            self.region = MKCoordinateRegion(
-                center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            )
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
-    }
 }
-
-

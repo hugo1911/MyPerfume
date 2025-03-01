@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import CoreLocation
+import CoreLocationUI
 
 struct InformationBlock: View {
     let perfume: PerfumeData
     @State private var showDetails = false  // Para controlar si mostrar detalles
     
+    
     var body: some View {
         ZStack {
-            Color.white
+            Color.clear
             
             VStack {
                 // Imagen del perfume
@@ -38,7 +41,9 @@ struct InformationBlock: View {
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Marca: \(perfume.brand)")
+                                .foregroundStyle(.white)
                             Text("Precio: $\(String(format: "%.2f", perfume.price))")
+                                .foregroundStyle(.white)
                         }
                         .font(.caption)
                         .foregroundStyle(.black)
@@ -49,7 +54,7 @@ struct InformationBlock: View {
                 // Siempre muestra el nombre
                 Text(perfume.name)
                     .font(.headline)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white)
                     .padding(.top, showDetails ? 8 : 5)
                 
                 // Detalles que aparecen solo cuando showDetails es true
@@ -57,13 +62,15 @@ struct InformationBlock: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Notas: \(perfume.notes)")
                             .font(.caption)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.white)
                         
                         Text(perfume.description)
                             .font(.caption2)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.white)
                             .multilineTextAlignment(.leading)
                             .lineLimit(5)
+                        
+                        
                     }
                     .padding(.horizontal, 10)
                     .padding(.top, 5)
@@ -75,7 +82,7 @@ struct InformationBlock: View {
         .frame(width: 170, height: showDetails ? 250 : 170)  // Altura dinámica
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.black, lineWidth: 2)
+                .stroke(Color.white, lineWidth: 2)
         )
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: showDetails)
         .onTapGesture {

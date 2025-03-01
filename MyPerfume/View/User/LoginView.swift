@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     var body: some View {
+        
         NavigationStack{
-            
-            
             
             
             VStack{
@@ -20,18 +20,31 @@ struct LoginView: View {
                     .frame(width: 300, height: 50)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 30)
                 
                 TextField(" Usuario", text: .constant(""))
+                    .foregroundStyle(.black)
                     .frame(width: 300, height: 50)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
+                    .padding()
                 
                 TextField(" Ingrese su contraseña", text: .constant(""))
                     .foregroundStyle(.black)
                     .frame(width: 300, height: 50)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.black, lineWidth: 2)
+                        
+                    )
+                    .padding()
                 
                 NavigationLink(destination: MainView()
                     .navigationBarBackButtonHidden(true)
@@ -39,7 +52,7 @@ struct LoginView: View {
                     Text("Entrar!")
                         .foregroundStyle(.black)
                         .frame(width: 300, height: 50)
-                        .background(Color.white)
+                        .background(Color.green)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 .padding(.bottom, 80)
@@ -55,9 +68,15 @@ struct LoginView: View {
                     
                     NavigationLink(destination: RegistrationView()) {
                         Text("Regístrese!")
-                            .frame(width: 150, height: 50)
+                            .foregroundStyle(.black)
+                            .frame(width: 140, height: 50)
                             .background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.black, lineWidth: 2)
+                                
+                            )
                     }
                 }
                 
