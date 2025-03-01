@@ -1,3 +1,10 @@
+//
+//  UserData.swift
+//  MyPerfume
+//
+//  Created by Hugo Manzano on 2/18/25.
+//
+
 import Foundation
 import CoreLocation
 

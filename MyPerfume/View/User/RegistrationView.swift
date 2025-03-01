@@ -1,8 +1,16 @@
-//Hugo Manzano 36231
+//
+//  UserData.swift
+//  MyPerfume
+//
+//  Created by Hugo Manzano on 2/18/25.
+//
 
 import SwiftUI
 
 struct RegistrationView: View {
+    
+    
+    
     @State private var username: String = ""
     @State private var password: String = ""
     
@@ -12,17 +20,18 @@ struct RegistrationView: View {
     @State private var hasUppercase = false
     @State private var hasSpecialChar = false
     
-    // Verifica si todos los requisitos se cumplen
+    // Esto es para verificar si todos los requisitos se cumplen
     private var isPasswordValid: Bool {
         return hasMinLength && hasNumber && hasUppercase && hasSpecialChar
     }
     
     var body: some View {
-        //La imagen esta de fondo en toda la pantalla
+        
         
         VStack {
             
             VStack{
+                
                 
                 Text("Registro de Usuario")
                     .font(.title)
@@ -162,11 +171,22 @@ struct RegistrationView: View {
                 Text("Registrarse")
                     .foregroundStyle(.black)
                     .frame(width: 300, height: 50)
-                    .background(isPasswordValid ? Color.white : Color.gray.opacity(0.5))
+                    .background(isPasswordValid ? Color.green : Color.gray.opacity(0.5))
                     .foregroundColor(isPasswordValid ? .black : .gray)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
             }
             .disabled(!isPasswordValid)
+            .padding(.bottom, 10)
+            
+            NavigationLink(destination: LoginView()
+                .navigationBarBackButtonHidden(true)
+            ) {
+                Text("Ya tienes una cuenta?      Inicia sesión")
+                    .foregroundStyle(.white)
+                    .frame(width: 300, height: 50)
+                    .background(Color.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
             .padding(.bottom, 80)
         }
     }

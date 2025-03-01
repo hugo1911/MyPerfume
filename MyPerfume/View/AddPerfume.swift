@@ -1,4 +1,9 @@
-//hugo Manzano 36231
+//
+//  UserData.swift
+//  MyPerfume
+//
+//  Created by Hugo Manzano on 2/18/25.
+//
 
 import SwiftUI
 
@@ -76,8 +81,7 @@ struct AddPerfume: View {
                                 price: perfumePrice,
                                 description: perfumeDescription,
                                 perfumeImage: perfumeImage ?? UIImage(systemName: "photo")!,
-                                // Convertimos la nota en array (si deseas una nota única)
-                                notes: (perfumeNotes?.isEmpty == false) ? [perfumeNotes!] : []
+                                notes: perfumeNotes != nil ? [perfumeNotes!] : []
                             )
                             
                             viewModel.addPerfume(newPerfume)

@@ -20,6 +20,8 @@ struct InformationBlock: View {
             
             VStack {
                 // Imagen del perfume
+                
+                // ! dice "si no se estan mostrando detalles continua"
                 if !showDetails {
                     // Cuando no muestra detalles, la imagen es grande
                     Image(uiImage: perfume.perfumeImage)
@@ -51,7 +53,7 @@ struct InformationBlock: View {
                     .padding(.horizontal, 5)
                 }
                 
-                // Siempre muestra el nombre
+                // Siempre muestra el nombre este showDetailes true o false
                 Text(perfume.name)
                     .font(.headline)
                     .foregroundStyle(.white)

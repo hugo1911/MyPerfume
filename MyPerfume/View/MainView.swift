@@ -1,5 +1,9 @@
-//Hugo Manzano
-
+//
+//  UserData.swift
+//  MyPerfume
+//
+//  Created by Hugo Manzano on 2/18/25.
+//
 
 import SwiftUI
 
@@ -7,6 +11,8 @@ struct MainView: View {
     @State private var viewModel = perfumeViewModel(perfume: [])
     @State private var isImagePresented = false
     @StateObject private var locationManager = LocationManager()
+    @State private var showDeleteAlert = false
+    @State private var perfumeToDelete: PerfumeData?
     
     var body: some View {
         NavigationStack {
@@ -45,12 +51,13 @@ struct MainView: View {
                         } else {
                             ForEach(viewModel.perfume) { perfume in
                                 InformationBlock(perfume: perfume)
-                                
-                                
-                                    
+                                    .onLongPressGesture {
+                                        // Almacena el perfume que se desea eliminar
+                                        perfumeToDelete = perfume
+                                        // Muestra la alerta de confirmación
+                                        showDeleteAlert = true
+                                    }
                             }
-                            
-                            
                         }
                     }
                     .padding()
@@ -78,6 +85,23 @@ struct MainView: View {
             }
             .sheet(isPresented: $isImagePresented) {
                 AddPerfume(viewModel: viewModel)
+            }
+            .alert("Eliminar Perfume", isPresented: $showDeleteAlert) {
+                Button("Cancelar", role: .cancel) {
+                    perfumeToDelete = nil
+                }
+                Button("Eliminar", role: .destructive) {
+                    if let perfume = perfumeToDelete {
+                        viewModel.deletePerfume(perfume)
+                        perfumeToDelete = nil
+                    }
+                }
+            } message: {
+                if let perfume = perfumeToDelete {
+                    Text("¿Estás seguro de que quieres eliminar '\(perfume.name)'?")
+                } else {
+                    Text("¿Estás seguro de que quieres eliminar este perfume?")
+                }
             }
             .onAppear {
                 print("MainView se actualizó, perfumes actuales: \(viewModel.perfume.count)")

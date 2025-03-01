@@ -1,8 +1,8 @@
 //
-//  ImagePickerView.swift
+//  UserData.swift
 //  MyPerfume
 //
-//  Created by Hugo Manzano on 07/01/25.
+//  Created by Hugo Manzano on 2/18/25.
 //
 
 import SwiftUI
@@ -15,17 +15,12 @@ struct ImagePickerView: View {
     @State private var isImagePresented: String = "Selecciona una imagen"
     @Binding var image: UIImage?
     
-    
-    
     var body: some View {
         VStack(spacing: 20) {
-            
-            
             Text(isImagePresented)
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
-            
             
             PhotosPicker(selection: $pickerItem, matching: .images) {
                 VStack {
@@ -63,8 +58,9 @@ struct ImagePickerView: View {
                 if let data = try? await pickerItem?.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
+                    image = uiImage
+                    isImagePresented = "" //quitamos el texto de seleccionar una imagen
                 }
-                isImagePresented = "" //quitamos el texto de seleccionar una imagen
             }
         }
     }

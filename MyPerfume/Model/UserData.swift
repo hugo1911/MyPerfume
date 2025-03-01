@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 
+//Al final no agregamos nada de lo de autenticacion mas a fondo jajaj para el loginview
 @Observable
 class userData: Identifiable, Codable {
     var id: UUID
